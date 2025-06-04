@@ -17,7 +17,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           can_modify=$(gh pr view ${{ github.event.pull_request.number }} --json maintainerCanModify --jq '.maintainerCanModify')
-          if [ "$can_modify" = "true" ]; then
+          is_closed=$(gh pr view ${{ github.event.pull_request.number }} --json closed --jq '.closed')
+          if [ "$is_closed" = "true" ]; then
+            echo "PR is closed, skipping check for maintainer modifications"
+          elif [ "$can_modify" = "true" ]; then
             echo "✅ Maintainers can modify the PR"
           else
             echo "❌ Maintainers cannot modify the PR"
