@@ -13,14 +13,11 @@ to notify us. We welcome working with you to resolve the issue promptly.
 
 ## Reporting vulnerabilities
 
-Please report security issues to contact@lichess.org.
+Please report security issues to contact@lichess.org
+or through [GitHub security advisory](https://github.com/lichess-org/.github/security/advisories/new).
 
 Vulnerabilities are relevant even when they are not directly exploitable, for
 example XSS mitigated by CSP.
-
-We believe transport encryption will probably be sufficient for all reports.
-If you insist on using PGP, please clarify the nature of the message in the
-plain-text subject and encrypt for [multiple recipients](https://lichess.org/.well-known/gpg.asc).
 
 ## Scope
 
@@ -43,6 +40,21 @@ and infrastructure, including the domains:
 * Do not create more than 5 user accounts.
 * All forms of social engineering (e.g., phishing) are strictly prohibited.
 * Respect HTTP rate limits, i.e., slow down when you receive HTTP 429.
+
+# Exclusions 
+
+Please do not submit issues regarding:
+
+* Theoretical vulnerabilities without any proof or demonstration of the real presence of the vulnerability
+* Findings from automated tools without providing a Proof of Concept
+* (D)DoS
+* Missing X-Content-Type-Options, Referrer-Policy or Feature-Policy headers
+* Non-sensitive data disclosure, including software version information, confirmation that a specific email address is in use, confirming the existence (but not content) of sensitive information
+* Content spoofing and text injection issues without showing an attack vector/without being able to modify HTML/CSS
+* Previously known vulnerable software or libraries without a working Proof of Concept
+* Vulnerabilities requiring access to a user’s browser, or a smartphone, or email account
+* CSRF from local files (file://) using https://bugzilla.mozilla.org/show_bug.cgi?id=1608391
+* Cheating at puzzles, including /training, /racer, /storm, /streak and /learn. They're about training, not competition.
 
 ## Response targets
 
