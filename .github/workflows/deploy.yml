@@ -1,0 +1,20 @@
+name: Deploy
+
+on:
+  workflow_call:
+    secrets:
+      deploy_webhook_url:
+        required: true
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: deploy
+        run: |
+          curl \
+            --silent \
+            --write-out "%{http_code}" \
+            --fail-with-body \
+            --request POST \
+            ${{ secrets.deploy_webhook_url }}
