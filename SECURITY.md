@@ -13,11 +13,9 @@ to notify us. We welcome working with you to resolve the issue promptly.
 
 ## Reporting vulnerabilities
 
-Please report security issues to contact@lichess.org
-or through [GitHub security advisory](https://github.com/lichess-org/.github/security/advisories/new).
+Please report security issues through [GitHub security advisory](https://github.com/lichess-org/.github/security/advisories/new).
 
-Vulnerabilities are relevant even when they are not directly exploitable, for
-example XSS mitigated by CSP.
+Vulnerabilities are relevant even when they are not directly exploitable, for example XSS mitigated by CSP.
 
 ## Scope
 
