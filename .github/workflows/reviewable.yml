@@ -6,21 +6,23 @@ on:
 jobs:
   review:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Ensure maintainers can modify PR
         if: github.event.pull_request.head.repo.full_name != github.repository
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}
         run: |
-          can_modify=$(gh pr view ${{ github.event.pull_request.number }} --json maintainerCanModify --jq '.maintainerCanModify')
-          is_closed=$(gh pr view ${{ github.event.pull_request.number }} --json closed --jq '.closed')
+          can_modify=$(gh pr view "$PR" --json maintainerCanModify --jq '.maintainerCanModify')
+          is_closed=$(gh pr view "$PR" --json closed --jq '.closed')
           if [ "$is_closed" = "true" ]; then
             echo "PR is closed, skipping check for maintainer modifications"
           elif [ "$can_modify" = "true" ]; then
             echo "✅ Maintainers can modify the PR"
           else
             echo "❌ Maintainers cannot modify the PR"
-            echo "::error::Maintainers cannot modify the PR. Please enable 'Allow edits from maintainers' in the PR settings."
             exit 1
           fi
