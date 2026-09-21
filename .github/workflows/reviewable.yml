@@ -7,14 +7,13 @@ jobs:
   review:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
       pull-requests: write
     steps:
-      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Ensure maintainers can modify PR
         if: github.event.pull_request.head.repo.full_name != github.repository
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
           can_modify=$(gh pr view ${{ github.event.pull_request.number }} --json maintainerCanModify --jq '.maintainerCanModify')
           is_closed=$(gh pr view ${{ github.event.pull_request.number }} --json closed --jq '.closed')
@@ -24,7 +23,6 @@ jobs:
             echo "✅ Maintainers can modify the PR"
           else
             echo "❌ Maintainers cannot modify the PR"
-            gh pr review ${{ github.event.pull_request.number }} \
-              --request-changes \
-              --body "Please allow edits from maintainers on your pull request. See how to enable them [here](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/allowing-changes-to-a-pull-request-branch-created-from-a-fork#enabling-repository-maintainer-permissions-on-existing-pull-requests)"
+            echo "::error::Maintainers cannot modify the PR. Please enable 'Allow edits from maintainers' in the PR settings."
+            exit 1
           fi
